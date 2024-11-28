@@ -6,7 +6,7 @@
     "path": "^0.12.7"
   },
   "name": "hyscript-latest",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "HyScript is a lightweight and dynamic server-side framework that allows you to easily create and serve web pages using `.hs` files written in JSON format.  ",
   "main": "index.js",
   "scripts": {

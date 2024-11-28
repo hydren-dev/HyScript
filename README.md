@@ -38,6 +38,9 @@ const hy = new HyScript();
 // Set the directory containing `.hs` files  
 hy.set('./pages');  
 
+// Public Directory 
+hy.static('public')
+
 // Start the server on a specific port  
 const PORT = 3000;  
 hy.start(PORT, 'HyScript server is running!');  
@@ -100,6 +103,10 @@ In the example above:
    - `http://localhost:3000/about` to see the `about.hs` page.  
 
 ---
+
+## Example Page
+
+You Can Either Use [Example Website](https://github.com/hydren-dev/Example-HyScript) 
 
 ## File Structure  
 

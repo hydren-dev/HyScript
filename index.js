@@ -24,6 +24,14 @@ class HyScript {
     console.log(`Directory set to: ${dir}`);
   }
 
+  static(folder) {
+    if (!fs.existsSync(folder)) {
+      throw new Error(`Directory not found for static files: ${folder}`);
+    }
+
+    this.app.use(`/${folder}`, express.static(path.join(__dirname, `${folder}`)))
+  }
+
   /**
    * Starts the server and serves `.hs` files dynamically.
    * @param {number} port - Port to start the server on.
@@ -75,7 +83,7 @@ class HyScript {
 
     this.app.listen(port, () => {
       console.log(message);
-      console.log(`Server running on http://localhost:${port}`);
+      console.log(`HyScript is Loaded and Started on ${port}`);
     });
   }
 }
