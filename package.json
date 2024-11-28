@@ -2,11 +2,11 @@
   "dependencies": {
     "express": "^4.21.1",
     "fs": "^0.0.1-security",
-    "hyscript-latest": "^1.0.0",
+    "hyscript-latest": "^1.0.1",
     "path": "^0.12.7"
   },
   "name": "hyscript-latest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Runs Web",
   "main": "index.js",
   "scripts": {

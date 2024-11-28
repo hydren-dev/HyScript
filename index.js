@@ -9,7 +9,7 @@ class HyScript {
   }
 
   /**
-   * Sets the directory containing `.hs` files.
+   * Sets the directory containing `.hs` (JSON) files.
    * @param {string} dir - The directory path containing `.hs` files.
    */
   set(dir) {
@@ -31,7 +31,7 @@ class HyScript {
    * @param {string} message - Message to display when the server starts.
    */
   start(port, message) {
-    // Middleware to serve .hs files
+    // Middleware to serve `.hs` files
     this.app.get('/:file', (req, res) => {
       const fileName = req.params.file;
       const filePath = path.join(this.directory, `${fileName}.hs`);
@@ -42,24 +42,23 @@ class HyScript {
       }
 
       try {
-        // Read and evaluate the content of the .hs file
+        // Parse the JSON content of the `.hs` file
         const fileContent = fs.readFileSync(filePath, 'utf8');
-        const context = {};
-        eval(fileContent); // Use eval to extract variables (title, content, etc.)
+        const jsonData = JSON.parse(fileContent);
 
         // Build the HTML response
         const html = `
           <!DOCTYPE html>
-          <html lang="${context.lang || 'en'}">
+          <html lang="en">
           <head>
               <meta charset="UTF-8">
               <meta name="viewport" content="width=device-width, initial-scale=1.0">
-              <meta name="description" content="${context.meta || ''}">
-              <title>${context.title || 'Untitled'}</title>
-              ${context.icon ? `<link rel="icon" href="${context.icon}">` : ''}
+              <meta name="description" content="${jsonData.meta || ''}">
+              <title>${jsonData.title || 'Untitled'}</title>
+              ${jsonData.logo ? `<link rel="icon" href="${jsonData.logo}">` : ''}
           </head>
           <body>
-              ${context.content || ''}
+              ${jsonData.content || ''}
           </body>
           </html>
         `;
