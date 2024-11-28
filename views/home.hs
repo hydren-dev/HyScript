@@ -1,6 +1,9 @@
 {
-  "title": "About Us",
-  "content": "<h1>About Our Company</h1><p>We strive for excellence.</p>",
-  "meta": "Learn more about our company.",
-  "logo": "/logo.png"
+  "title": "Home Page",
+  "meta": "Welcome to our homepage.",
+  "logo": "/favicon.ico",
+  "tailwindcss": false
 }
+<!---Content--->
+<h1>Welcome to HyScript!</h1>
+<p>This is a dynamic page.</p>

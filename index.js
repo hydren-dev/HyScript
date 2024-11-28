@@ -21,7 +21,6 @@ class HyScript {
     }
 
     this.directory = dir;
-
     console.log(`Directory set to: ${dir}`);
   }
 
@@ -44,7 +43,10 @@ class HyScript {
       try {
         // Parse the JSON content of the `.hs` file
         const fileContent = fs.readFileSync(filePath, 'utf8');
-        const jsonData = JSON.parse(fileContent);
+        const jsonData = JSON.parse(fileContent.split('<!---Content--->')[0]);
+
+        // Get the HTML content after the comment <!---Content--->
+        const content = fileContent.split('<!---Content--->')[1]?.trim();
 
         // Build the HTML response
         const html = `
@@ -56,9 +58,10 @@ class HyScript {
               <meta name="description" content="${jsonData.meta || ''}">
               <title>${jsonData.title || 'Untitled'}</title>
               ${jsonData.logo ? `<link rel="icon" href="${jsonData.logo}">` : ''}
+              ${jsonData.tailwindcss ? `<script src="https://cdn.tailwindcss.com"></script>` : ''}
           </head>
           <body>
-              ${jsonData.content || ''}
+              ${content || ''}
           </body>
           </html>
         `;
