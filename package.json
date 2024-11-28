@@ -6,7 +6,7 @@
     "path": "^0.12.7"
   },
   "name": "hyscript-latest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Runs Web",
   "main": "index.js",
   "scripts": {
