@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "cat-loggr": "^1.2.2",
     "express": "^4.21.1",
     "fs": "^0.0.1-security",
-    "hyscript-latest": "^1.0.1",
+    "hyscript-latest": "^1.0.5",
     "path": "^0.12.7"
   },
   "name": "hyscript-latest",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "HyScript is a lightweight and dynamic server-side framework that allows you to easily create and serve web pages using `.hs` files written in JSON format.  ",
   "main": "index.js",
   "scripts": {
