@@ -24,12 +24,21 @@ class HyScript {
     console.log(`Directory set to: ${dir}`);
   }
 
-  static(folder) {
-    if (!fs.existsSync(folder)) {
-      throw new Error(`Directory not found for static files: ${folder}`);
-    }
+  /**
+   * Set the Static Directory Folder 
+   * @param {string} folder - Folder to put on static,
+   */
 
-    this.app.use(`/${folder}`, express.static(path.join(__dirname, `${folder}`)))
+  static(folder) {
+    const absolutePath = path.resolve(folder); // Get absolute path of the folder
+  
+    if (!fs.existsSync(absolutePath)) {
+      console.error(`Directory not found for static files: ${absolutePath}`);
+      return; // Exit if the folder doesn't exist
+    }
+  
+    this.app.use(express.static(absolutePath)); // Serve the folder directly without prefix
+    console.log(`Serving static files from: ${absolutePath}`);
   }
 
   /**
