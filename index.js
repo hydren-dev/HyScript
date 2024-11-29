@@ -10,6 +10,21 @@ class HyScript {
   constructor() {
     this.directory = null;
     this.app = express();
+    this.definitions = {}; 
+  }
+
+  /**
+   * Defines a reusable content block.
+   * @param {string} name - The name of the content block.
+   * @param {string} content - The content to be associated with the name.
+   */
+  define(name, content) {
+    if (typeof name !== 'string' || typeof content !== 'string') {
+      throw new Error('Both name and content must be strings.');
+    }
+
+    this.definitions[name] = content;
+    log.init(`Adding ${name}`);
   }
 
   /**
@@ -44,6 +59,33 @@ class HyScript {
     this.app.use(express.static(absolutePath)); // Serve the folder directly without prefix
     log.init(`Serving static files from: ${absolutePath}`);
   }
+
+  /**
+   * Middleware to use defined content in `.hs` file rendering.
+   * This is applied before sending the response.
+   */
+ /**
+ * Middleware to use defined content in `.hs` file rendering.
+ * This is applied before sending the response.
+ */
+applyDefinitions(content) {
+  // Replace placeholders in the content
+  Object.keys(this.definitions).forEach((name) => {
+      const placeholder = new RegExp(`\\[%==\\s*${name}\\s*==%\\]`, 'g'); // Match placeholder syntax
+      if (placeholder.test(content)) {
+          log.init(`Replacing placeholder [%== ${name} ==%] with defined content.`);
+      }
+      content = content.replace(placeholder, this.definitions[name] || ''); // Replace or leave empty if undefined
+  });
+
+  // Log warning if unprocessed placeholders remain
+  const remainingPlaceholders = content.match(/\[%==\s*\w+\s*==%]/g);
+  if (remainingPlaceholders) {
+      log.warn(`Unprocessed placeholders found: ${remainingPlaceholders.join(', ')}`);
+  }
+
+  return content;
+}
 
   /**
    * Starts the server and serves `.hs` files dynamically.
@@ -122,14 +164,13 @@ class HyScript {
       }
 
       try {
-        // Parse the JSON content of the `.hs` file
         const fileContent = fs.readFileSync(filePath, 'utf8');
         const jsonData = JSON.parse(fileContent.split('<!---Content--->')[0]);
+        let content = fileContent.split('<!---Content--->')[1]?.trim();
 
-        // Get the HTML content after the comment <!---Content--->
-        const content = fileContent.split('<!---Content--->')[1]?.trim();
+        // Apply defined content placeholders
+        content = this.applyDefinitions(content);
 
-        // Build the HTML response
         const html = `
           <!DOCTYPE html>
           <html lang="en">
@@ -142,23 +183,22 @@ class HyScript {
               ${jsonData.tailwindcss ? `<script src="https://cdn.tailwindcss.com"></script>` : ''}
           </head>
           <body ${jsonData.body ? `class="${jsonData.body}"` : ''}>
-             ${content || ''}
+              ${content || ''}
           </body>
           </html>
         `;
 
         res.send(html);
-      } catch (error) {
+    } catch (error) {
         log.error(`Error processing ${fileName}.hs:`, error.message);
         res.status(500).send('Internal server error');
-      }
-    });
+    }
+});
 
-    this.app.listen(port, () => {
-      log.init(message);
-    });
-  }
+this.app.listen(port, () => {
+    log.init(message);
+});
 }
-
+}
 // Exporting the package as a module
 module.exports = HyScript;
