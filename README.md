@@ -2,6 +2,8 @@
 <div align="center">
 <a href="https://github.com/hydren-dev/HyScript"><img src="https://hyscript.hydren.us.kg/favicon.ico" title="Logo" style="max-width:100%;" width="128" /></a>
 </div>
+
+<div align="center">
 **Next Generation Language**  
 
 HyScript is a lightweight and dynamic server-side framework that allows you to easily create and serve web pages using `.hs` files written in JSON format.  
@@ -183,7 +185,7 @@ Visiting `http://localhost:3000/about` will render:
 We welcome contributions to HyScript!  
 Feel free to submit issues or pull requests to enhance the functionality.  
 
----
+</div>
 
 ## License  
 HyScript is released under the [MIT License](LICENSE).  
