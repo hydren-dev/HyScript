@@ -4,10 +4,11 @@
 </div>
 
 <div align="center">
+
 **Next Generation Language**  
 
 HyScript is a lightweight and dynamic server-side framework that allows you to easily create and serve web pages using `.hs` files written in JSON format.  
-
+</div>
 ---
 
 ## Features  
@@ -185,7 +186,7 @@ Visiting `http://localhost:3000/about` will render:
 We welcome contributions to HyScript!  
 Feel free to submit issues or pull requests to enhance the functionality.  
 
-</div>
+---
 
 ## License  
 HyScript is released under the [MIT License](LICENSE).  
